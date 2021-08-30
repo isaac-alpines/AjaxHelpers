@@ -1,10 +1,25 @@
-﻿@{
+﻿@model AjaxHelpers.Models.TodoItem
+
+@{
     ViewBag.Title = "Home";
 }
 <div class="row">
 
+
+    @using (Ajax.BeginForm("Index", new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "list", LoadingElementId = "loading", InsertionMode = InsertionMode.InsertAfter, LoadingElementDuration = 300 }))
+    {
+        <div class="row">
+            <div class="col-md-8 mt-4">
+                @Html.TextBoxFor(x => x.Text, new { @class = "form-control", placeholder = "New list item name..." })
+            </div>
+            <div class="col-md-4 mt-4 d-grid gap-1">
+                <button class="btn btn-success" type="submit">Add</button>
+            </div>
+        </div>
+    }
+
     <div class="col-12 mt-4">
-        @Ajax.ActionLink("Load All Data", "LoadData", null, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "list", InsertionMode = InsertionMode.Replace, LoadingElementId = "loading", LoadingElementDuration = 300 }, new { @class = "btn btn-success" })
+        @Ajax.ActionLink("Load All Data", "LoadData", null, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "list", InsertionMode = InsertionMode.Replace, LoadingElementId = "loading", LoadingElementDuration = 300 }, new { @class = "btn btn-warning" })
     </div>
 
     <div class="col-12 mt-4">
@@ -13,6 +28,18 @@
         </div>
 
         <ul id="list" class="list-group">
+            @if (ViewBag.List != null)
+            {
+                foreach (AjaxHelpers.Models.TodoItem item in ViewBag.List)
+                {
+                    <li id="data_@item.Id" class="list-group-item">
+
+                        @Ajax.ActionLink("Delete", "RemoveData", new { id = @item.Id }, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "data_" + @item.Id, InsertionMode = InsertionMode.ReplaceWith, LoadingElementId = "loading", LoadingElementDuration = 300 }, new { @class = "btn btn-danger btn-sm delete-btn" })
+
+                        @item.Text
+                    </li>
+                }
+            }
         </ul>
     </div>
 </div>

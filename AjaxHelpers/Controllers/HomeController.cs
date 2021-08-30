@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AjaxHelpers.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,27 +11,75 @@ namespace AjaxHelpers.Controllers
     {
         public ActionResult Index()
         {
-            List<string> listData = new List<string>() { "apple", "samsung", "xiaomi", "huawei", "general mobile", "sony" };
+            List<TodoItem> list;
 
-            Session["listData"] = listData;
+            if (Session["listData"] != null)
+            {
+                list = Session["listData"] as List<TodoItem>;
+            }
+            else
+            {
+                list = new List<TodoItem>();
+            }
 
-            return View();
+            ViewBag.List = list;
+
+            return View(new TodoItem());
+        }
+
+        [HttpPost]
+        public PartialViewResult Index(TodoItem model)
+        {
+            List<TodoItem> list = null;
+
+            if (Session["listData"] != null)
+            {
+                list = Session["listData"] as List<TodoItem>;
+            } 
+            else
+            {
+                list = new List<TodoItem>();
+            }
+
+            model.Id = Guid.NewGuid();
+
+            list.Add(model);
+
+            Session["listData"] = list;
+
+            return PartialView("_DataListPartialView", model);
         }
 
         public PartialViewResult LoadData()
         {
-            List<string> listData = Session["listData"] as List<string>;
+            List<TodoItem> listData = null;
+
+            if (Session["listData"] != null)
+            {
+                listData = Session["listData"] as List<TodoItem>;
+            }
+            else
+            {
+                listData = new List<TodoItem>();
+            }
 
             System.Threading.Thread.Sleep(1000);
 
             return PartialView("_DataListPartialView", listData);
         }
 
-        public MvcHtmlString RemoveData(int? id)
+        public MvcHtmlString RemoveData(Guid id)
         {
-            List<string> listData = Session["listData"] as List<string>;
+            List<TodoItem> listData = Session["listData"] as List<TodoItem>;
 
-            listData.Remove(id.ToString());
+            foreach (TodoItem item in listData)
+            {
+                if (item.Id == id)
+                {
+                    listData.Remove(item);
+                    break;
+                }
+            }
 
             Session["listData"] = listData;
 
