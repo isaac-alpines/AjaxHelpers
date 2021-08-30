@@ -3,18 +3,14 @@
 }
 <div class="row">
 
-    <div class="col-12 mt-2">
-        <div class="alert alert-primary" role="alert">
-            Click the button below to load the list data.
-        </div>
-    </div>
-
-    <div class="col-12">
-        @Ajax.ActionLink("Load All Data", "LoadData", null, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "list", InsertionMode = InsertionMode.Replace, LoadingElementId="loading", LoadingElementDuration=300 }, new { @class = "btn btn-success" })
+    <div class="col-12 mt-4">
+        @Ajax.ActionLink("Load All Data", "LoadData", null, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "list", InsertionMode = InsertionMode.Replace, LoadingElementId = "loading", LoadingElementDuration = 300 }, new { @class = "btn btn-success" })
     </div>
 
     <div class="col-12 mt-4">
-        <p class="link-danger load-text" id="loading">Loading data... Please wait...</p>
+        <div class="alert alert-warning load-text" role="alert" id="loading">
+            Loading data... Please wait...
+        </div>
 
         <ul id="list" class="list-group">
         </ul>
