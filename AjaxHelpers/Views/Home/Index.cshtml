@@ -1,7 +1,19 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Home";
 }
+<div class="row">
 
-<h2>Index</h2>
+    <div class="col-12 mt-2">
+        <div class="alert alert-primary" role="alert">
+            Click the button below to load the list data.
+        </div>
+    </div>
+    <div class="col-12">
+        @Ajax.ActionLink("Load All Data", "LoadData", null, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "list", InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-success" })
+    </div>
 
+    <div class="col-12 mt-4">
+        <ul id="list" class="list-group">
+        </ul>
+    </div>
+</div>

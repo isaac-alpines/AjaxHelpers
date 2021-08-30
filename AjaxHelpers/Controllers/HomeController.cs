@@ -12,5 +12,12 @@ namespace AjaxHelpers.Controllers
         {
             return View();
         }
+
+        public PartialViewResult LoadData()
+        {
+            List<string> listData = new List<string>() { "apple", "samsung", "xiaomi", "huawei", "general mobile", "sony"};
+
+            return PartialView("_DataListPartialView", listData);
+        }
     }
 }
