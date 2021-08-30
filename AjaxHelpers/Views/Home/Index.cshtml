@@ -8,11 +8,14 @@
             Click the button below to load the list data.
         </div>
     </div>
+
     <div class="col-12">
-        @Ajax.ActionLink("Load All Data", "LoadData", null, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "list", InsertionMode = InsertionMode.Replace }, new { @class = "btn btn-success" })
+        @Ajax.ActionLink("Load All Data", "LoadData", null, new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "list", InsertionMode = InsertionMode.Replace, LoadingElementId="loading", LoadingElementDuration=300 }, new { @class = "btn btn-success" })
     </div>
 
     <div class="col-12 mt-4">
+        <p class="link-danger load-text" id="loading">Loading data... Please wait...</p>
+
         <ul id="list" class="list-group">
         </ul>
     </div>

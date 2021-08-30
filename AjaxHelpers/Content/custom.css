@@ -2,3 +2,11 @@
     border-end-start-radius: .25rem;
     border-end-end-radius: .25rem;
 }
+
+.load-text {
+    display: none;
+}
+
+.delete-btn {
+    margin-right: 8px;
+}
